@@ -27,7 +27,7 @@
       <!--problem main end-->
       <Card :padding="20" id="submit-code" dis-hover>
         <div v-for="(range, index) in code_value_list" :key="index">
-        <p class="title"><strong>{{'Code - ' + (index + 1) + ' ' + problem.code_description[index]}}</strong></p>
+        <p class="title"><strong>{{'Code - ' + (index + 1) + ' ' + problem.code_names[index]}}</strong></p>
         <CodeMirror :value.sync="range.value"
                     :languages="problem.languages"
                     :language="language"
@@ -144,7 +144,7 @@
         </ul>
       </Card>
 
-      <Card id="pieChart" :padding="0" v-if="!this.contestID || OIContestRealTimePermission">
+      <!-- <Card id="pieChart" :padding="0" v-if="!this.contestID || OIContestRealTimePermission">
         <div slot="title">
           <Icon type="ios-analytics"></Icon>
           <span class="card-title">{{$t('m.Statistic')}}</span>
@@ -153,7 +153,7 @@
         <div class="echarts">
           <ECharts :options="pie"></ECharts>
         </div>
-      </Card>
+      </Card> -->
     </div>
 
     <Modal v-model="graphVisible">
@@ -260,29 +260,30 @@
         api[func](this.problemID, this.contestID).then(res => {
           this.$Loading.finish()
           let problem = res.data.data
+          console.log('下一条是从后端获取的problem')
           console.log(problem)
-          this.submit_ban = !problem.submit_allow
+          // this.submit_ban = !problem.submit_allow
           this.changeDomTitle({title: problem.title})
           api.submissionExists(problem.id).then(res => {
             this.submissionExists = res.data.data
           })
           problem.languages = problem.languages.sort()
           this.problem = problem
-          if (problem.statistic_info) {
-            this.changePie(problem)
-          }
+          // if (problem.statistic_info) {
+          //   this.changePie(problem)
+          // }
           // 在beforeRouteEnter中修改了, 说明本地有code，无需加载template
           while (this.code_value_list.length < problem.code_num) {
             this.code_value_list.push({value: ''})
           }
           // try to load problem template
           this.language = this.problem.languages[0]
-          let template = this.problem.template
-          if (template && template[this.language]) {
-            for (var i = 0; i < template.length; i++) {
-              this.code_list[i] = template[this.language][i]
-            }
-          }
+          // let template = this.problem.template
+          // if (template && template[this.language]) {
+          //   for (var i = 0; i < template.length; i++) {
+          //     this.code_list[i] = template[this.language][i]
+          //   }
+          // }
         }, () => {
           this.$Loading.error()
         })

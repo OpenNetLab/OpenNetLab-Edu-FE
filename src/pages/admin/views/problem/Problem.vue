@@ -25,7 +25,7 @@
         </el-row>
       
         <el-row :gutter="20">
-          <el-col :span="4">
+          <!-- <el-col :span="4">
             <el-form-item :label="$t('m.Visible')">
               <el-switch
                 v-model="problem.visible"
@@ -33,7 +33,7 @@
                 inactive-text="">
               </el-switch>
             </el-form-item>
-          </el-col>
+          </el-col> -->
 
           <el-col :span="6">
             <el-form-item :label="$t('m.Tag')" :error="error.tags" required>
@@ -61,13 +61,13 @@
               <el-button class="button-new-tag" v-else size="small" @click="inputVisible = true">+ {{$t('m.New_Tag')}}</el-button>
             </el-form-item>
           </el-col>
-          <el-col :span="4">
+          <!-- <el-col :span="4">
             <el-form-item prop="restriction" :label="$t('m.Restriction')" required>
               <el-input  v-model.number="problem.restriction" :placeholder="$t('m.RestrictionNote')"></el-input>
             </el-form-item>          
-          </el-col>
+          </el-col> -->
 
-          <el-col :span="10">
+          <!-- <el-col :span="10">
             <el-form-item :label="$t('m.Languages')" :error="error.languages" required>
               <el-checkbox-group v-model="problem.languages">
                 <el-tooltip class="spj-radio" v-for="lang in allLanguage.languages" :key="'spj'+lang.name" effect="dark"
@@ -76,11 +76,11 @@
                 </el-tooltip>
               </el-checkbox-group>
             </el-form-item>
-          </el-col>
+          </el-col> -->
         </el-row>
 
 
-        <el-row>
+        <!-- <el-row>
         <el-col :span="12">
           <el-form-item :label="$t('m.Servers')" required>
               <el-row :gutter="8" style="margin-bottom: 15px">
@@ -137,7 +137,7 @@
             </div>
           </el-form-item>
         </el-col>
-        </el-row>
+        </el-row> -->
         
         <el-row>
           <el-col :span="20"> 
@@ -153,11 +153,11 @@
                 @click.native="clickCodeN" ></el-input>
               </el-col>
               </el-row>
-              <div v-for="(range, index) in problem.code_description" :key=index>
+              <div v-for="(range, index) in problem.code_names" :key=index>
               <el-row :gutter="8" style="margin-bottom: 15px">
               <el-col :span="4" >
                 <el-tag type="success">
-                  <el-form-item :label="$t('Code segment ' + (index + 1) + ' description: ')"></el-form-item>
+                  <el-form-item :label="$t('Code segment ' + (index + 1) + ' filename: ')"></el-form-item>
                   </el-tag>
               </el-col>
               <el-col :span="9">
@@ -232,24 +232,24 @@
             </el-form-item>
           </el-col> 
 
-          <el-col :span="6">
+          <!-- <el-col :span="6">
             <el-form-item :label="$t('m.ExcutionBashUpload')" required>
               <el-upload action :limit="1" :auto-upload="false" :show-file-list="true" :on-change="handleCmdChange">
                 <el-button size="small" type="primary" icon="el-icon-fa-upload" slot="trigger">Choose File</el-button>
               </el-upload>
             </el-form-item>
-          </el-col>           
+          </el-col>            -->
         </el-row>
   
-        <el-form-item style="margin-top: 20px" :label="$t('m.Log_judge')">
+        <!-- <el-form-item style="margin-top: 20px" :label="$t('m.Log_judge')">
           <code-mirror v-model="problem.log_judge_code" placeholder=""></code-mirror>
-        </el-form-item>
-        <el-form-item style="margin-top: 20px" :label="$t('m.Hint')">
+        </el-form-item> -->
+        <!-- <el-form-item style="margin-top: 20px" :label="$t('m.Hint')">
           <Simditor v-model="problem.hint" placeholder=""></Simditor>
-        </el-form-item>
-        <el-form-item :label="$t('m.Code_Template')">
+        </el-form-item> -->
+        <!-- <el-form-item :label="$t('m.Code_Template')">
           <el-row>
-            <el-col :span="24" v-for="(v, k) in template" :key="'template'+k">
+            <el-col :span="24" v-for="(v, k) in emplate" t:key="'template'+k">
               <el-form-item>
                 <el-checkbox v-model="v.checked">{{ k }}</el-checkbox>
                 <div v-if="v.checked">
@@ -258,10 +258,10 @@
               </el-form-item>
             </el-col>
           </el-row>
-        </el-form-item>
-        <el-form-item :label="$t('m.Source')">
+        </el-form-item> -->
+        <!-- <el-form-item :label="$t('m.Source')">
           <el-input :placeholder="$t('m.Source')" v-model="problem.source"></el-input>
-        </el-form-item>
+        </el-form-item> -->
         <save @click.native="submit()">Save</save>
       </el-form>
     </Panel>
@@ -291,11 +291,11 @@
       return {
         rules: {
           _id: {required: true, message: 'Display ID is required', trigger: 'blur'},
-          title: {required: true, message: 'Title is required', trigger: 'blur'},
-          restriction: [
-            {required: true, message: 'Set the maximum number of submission times', trigger: 'blur'},
-            {type: 'number', message: 'The context in this field should be numbers'}
-          ]
+          title: {required: true, message: 'Title is required', trigger: 'blur'}
+          // restriction: [
+          //   {required: true, message: 'Set the maximum number of submission times', trigger: 'blur'},
+          //   {type: 'number', message: 'The context in this field should be numbers'}
+          // ]
         },
         loadingCompile: false,
         mode: '',
@@ -310,7 +310,7 @@
             value: '',
             key: ''
           }],
-          code_description: [{
+          code_names: [{
             value: ''
           }],
           code_num: 1,
@@ -371,7 +371,7 @@
             value: '',
             key: ''
           }],
-          code_description: [{
+          code_names: [{
             value: ''
           }],
           code_num: 1,
@@ -424,7 +424,7 @@
             if (confs.length === 0) {
               confs.push({key: '', value: ''})
             }
-            for (let v of data.code_description) {
+            for (let v of data.code_names) {
               codes.push({value: v})
             }
             for (var i = 0; i < (data.code_num - codes.length); i++) {
@@ -435,7 +435,7 @@
             // }
             data.port_num = ranges
             data.lab_conf = confs
-            data.code_description = codes
+            data.code_names = codes
             this.problem = data
           })
         } else {
@@ -453,26 +453,26 @@
         this.$refs.form.resetFields()
         this.problem = this.reProblem
       },
-      'problem.languages' (newVal) {
-        let data = {}
-        // use deep copy to avoid infinite loop
-        let languages = JSON.parse(JSON.stringify(newVal)).sort()
-        for (let item of languages) {
-          if (this.template[item] === undefined) {
-            let langConfig = this.allLanguage.languages.find(lang => {
-              return lang.name === item
-            })
-            if (this.problem.template[item] === undefined) {
-              data[item] = {checked: false, code: langConfig.config.template, mode: langConfig.content_type}
-            } else {
-              data[item] = {checked: true, code: this.problem.template[item], mode: langConfig.content_type}
-            }
-          } else {
-            data[item] = this.template[item]
-          }
-        }
-        this.template = data
-      },
+      // 'problem.languages' (newVal) {
+      //   let data = {}
+      //   // use deep copy to avoid infinite loop
+      //   let languages = JSON.parse(JSON.stringify(newVal)).sort()
+      //   for (let item of languages) {
+      //     if (this.template[item] === undefined) {
+      //       let langConfig = this.allLanguage.languages.find(lang => {
+      //         return lang.name === item
+      //       })
+      //       if (this.problem.template[item] === undefined) {
+      //         data[item] = {checked: false, code: langConfig.config.template, mode: langConfig.content_type}
+      //       } else {
+      //         data[item] = {checked: true, code: this.problem.template[item], mode: langConfig.content_type}
+      //       }
+      //     } else {
+      //       data[item] = this.template[item]
+      //     }
+      //   }
+      //   this.template = data
+      // },
       'problem.spj_language' (newVal) {
         this.spjMode = this.allLanguage.spj_languages.find(item => {
           return item.name === this.problem.spj_language
@@ -719,24 +719,24 @@
         }
       },
       addCodeD () {
-        this.problem.code_description.push({value: ''})
-        this.problem.code_num = this.problem.code_description.length
+        this.problem.code_names.push({value: ''})
+        this.problem.code_num = this.problem.code_names.length
       },
       removeCodeD (range) {
-        let index = this.problem.code_description.indexOf(range)
-        let len = this.problem.code_description.length
+        let index = this.problem.code_names.indexOf(range)
+        let len = this.problem.code_names.length
         if (len !== 1) {
-          this.problem.code_description.splice(index, 1)
+          this.problem.code_names.splice(index, 1)
         }
-        this.problem.code_num = this.problem.code_description.length
+        this.problem.code_num = this.problem.code_names.length
       },
       clickCodeN () {
-        let dslen = this.problem.code_description.length
-        if (this.problem.code_num < this.problem.code_description.length) {
-          this.problem.code_description.splice(this.problem.code_num, (this.problem.code_description.length - this.problem.code_num))
+        let dslen = this.problem.code_names.length
+        if (this.problem.code_num < this.problem.code_names.length) {
+          this.problem.code_names.splice(this.problem.code_num, (this.problem.code_names.length - this.problem.code_num))
         } else {
           for (var i = 0; i < (this.problem.code_num - dslen); i++) {
-            this.problem.code_description.push({value: ''})
+            this.problem.code_names.push({value: ''})
           }
         }
       },
@@ -759,17 +759,19 @@
           this.$error(this.error.tags)
           return
         }
-        if (!this.problem.languages.length) {
-          this.error.languages = 'Please choose at least one language for problem'
-          this.$error(this.error.languages)
-          return
-        }
-        console.log(this.problem.restriction)
-        if (this.problem.restriction < 1 || this.problem.restriction > 999) {
-          this.error.restriction = 'Please reset the submission restriction'
-          this.$error(this.error.restriction)
-          return
-        }
+        // setting languages as python only
+        this.problem.languages = ['python']
+        // if (!this.problem.languages.length) {
+        //   this.error.languages = 'Please choose at least one language for problem'
+        //   this.$error(this.error.languages)
+        //   return
+        // }
+        // console.log(this.problem.restriction)
+        // if (this.problem.restriction < 1 || this.problem.restriction > 999) {
+        //   this.error.restriction = 'Please reset the submission restriction'
+        //   this.$error(this.error.restriction)
+        //   return
+        // }
         this.problem.languages = this.problem.languages.sort()
         this.problem.template = {}
         for (let k in this.template) {
@@ -788,10 +790,10 @@
           ports.push(v.value)
         }
         let cds = []
-        for (let v of this.problem.code_description) {
+        for (let v of this.problem.code_names) {
           cds.push(v.value)
         }
-        this.problem.code_description = cds
+        this.problem.code_names = cds
         this.problem.port_num = ports
         this.problem.lab_config = configs
         if (this.problem.log_judge_code === '') {
@@ -814,6 +816,7 @@
         }
         let cmdfile = 'cmd'
         let imagefile = 'image'
+        console.log(this.problem)
         api[funcName](this.problem).then(res => {
           console.log(res.data.data['id'])
           this.sendRequest(res.data.data['id'], cmdfile)
