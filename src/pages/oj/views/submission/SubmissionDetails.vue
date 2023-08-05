@@ -159,6 +159,12 @@
           this.submission.language = data.language
           this.submission.username = data.username
           this.submission.code_list = data.code_list
+          if (data.result === 0) {
+            // PENDING
+            this.submission_score = ' '
+            this.display_message = 'The server is testing your program, wait a while'
+            return
+          }
           this.submission.problem = data.problem
           this.submission_score = data.grade
           if (data.grade > 0) {
