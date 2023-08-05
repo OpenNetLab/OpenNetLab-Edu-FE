@@ -1,27 +1,15 @@
 export const JUDGE_STATUS = {
-  '-2': {
-    name: 'Compile Error',
-    short: 'CE',
+  '0': {
+    name: 'Pending',
+    short: 'AC',
     color: 'yellow',
     type: 'warning'
   },
-  '-1': {
-    name: 'Wrong Answer',
-    short: 'WA',
-    color: 'red',
-    type: 'error'
-  },
-  '0': {
-    name: 'Accepted',
-    short: 'AC',
-    color: 'green',
-    type: 'success'
-  },
   '1': {
-    name: 'Runtime Error',
-    short: 'RE',
-    color: 'red',
-    type: 'error'
+    name: 'Judging',
+    short: 'Jg',
+    color: 'yellow',
+    type: 'warning'
   },
   '2': {
     name: 'System Error',
@@ -30,31 +18,28 @@ export const JUDGE_STATUS = {
     type: 'error'
   },
   '3': {
-    name: 'NETWORK_TIMEOUT',
-    short: 'NT',
-    color: 'red',
-    type: 'error'
+    name: 'ALL PASSED',
+    short: 'AP',
+    color: 'blue',
+    type: 'info'
   },
   '4': {
-    name: 'Pending',
+    name: 'SOME PASSED',
+    short: 'SP',
     color: 'yellow',
     type: 'warning'
   },
   '5': {
-    name: 'Judging',
-    color: 'blue',
-    type: 'info'
+    name: 'ALL FAILED',
+    short: 'AF',
+    color: 'red',
+    type: 'error'
   },
   '6': {
-    name: 'Partial Accepted',
-    short: 'PAC',
-    color: 'blue',
-    type: 'info'
-  },
-  '7': {
-    name: 'Submitting',
-    color: 'yellow',
-    type: 'warning'
+    name: 'PROGRAM TIMEOUT',
+    short: 'TM',
+    color: 'red',
+    type: 'error'
   }
 }
 

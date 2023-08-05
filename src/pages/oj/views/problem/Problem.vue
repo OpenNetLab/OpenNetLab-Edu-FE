@@ -25,17 +25,18 @@
         </div>
       </Panel>
       <!--problem main end-->
-      <Card :padding="20" id="submit-code" dis-hover>
+      <Card :padding="20" id="submit-code" v-if="!hideCodeMirror" dis-hover>
         <div v-for="(range, index) in code_value_list" :key="index">
-        <p class="title"><strong>{{'Code - ' + (index + 1) + ' ' + problem.code_names[index]}}</strong></p>
-        <CodeMirror :value.sync="range.value"
-                    :languages="problem.languages"
-                    :language="language"
-                    :theme="theme"
-                    @resetCode="onResetToTemplate"
-                    @changeTheme="onChangeTheme"
-                    @changeLang="onChangeLang"></CodeMirror>
-        <br>
+          <p class="title"><strong>{{'Code - ' + (index + 1) + ' ' + problem.code_names[index]}}</strong></p>
+          <CodeMirror :value.sync="range.value"
+                      :languages="problem.languages"
+                      :language="language"
+                      :theme="theme"
+                      @resetCode="onResetToTemplate"
+                      @changeTheme="onChangeTheme"
+                      @changeLang="onChangeLang">
+          </CodeMirror>
+          <br>
         </div>
         <Row type="flex" justify="space-between">
           <Col :span="10">
@@ -228,7 +229,9 @@
         largePieInitOpts: {
           width: '500',
           height: '480'
-        }
+        },
+        // true：从主页进入Problem，隐藏文本框，
+        hideCodeMirror: false
       }
     },
     beforeRouteEnter (to, from, next) {
@@ -257,17 +260,21 @@
         console.log('problemID: ' + this.problemID)
         let func = this.$route.name === 'problem-details' ? 'getProblem' : 'getContestProblem'
         console.log(func)
+        if (this.contestID === undefined) {
+          this.hideCodeMirror = true
+        }
         api[func](this.problemID, this.contestID).then(res => {
           this.$Loading.finish()
           let problem = res.data.data
-          console.log('下一条是从后端获取的problem')
+          console.log('get problem from backend')
           console.log(problem)
           // this.submit_ban = !problem.submit_allow
           this.changeDomTitle({title: problem.title})
           api.submissionExists(problem.id).then(res => {
             this.submissionExists = res.data.data
           })
-          problem.languages = problem.languages.sort()
+          // fix this: problem's languages should be a list
+          problem.languages = problem.languages
           this.problem = problem
           // if (problem.statistic_info) {
           //   this.changePie(problem)
@@ -284,6 +291,8 @@
           //     this.code_list[i] = template[this.language][i]
           //   }
           // }
+          console.log('after init this: ')
+          console.log(this)
         }, () => {
           this.$Loading.error()
         })
@@ -379,7 +388,7 @@
         this.refreshStatus = setTimeout(checkStatus, 2000)
       },
       submitCode () {
-        console.log('submitCode调用')
+        console.log('submitCode is called')
         for (let code of this.code_value_list) {
           if (code.value.trim() === '') {
             this.$error(this.$i18n.t('m.Code_list_can_not_be_empty'))

@@ -275,6 +275,9 @@ export const m = {
   Code_list_can_not_be_empty: 'Code can not be empty',
   Problem: 'Topic',
   Contest: 'Lab',
-  RunningTask: 'Running Task List'
-
+  RunningTask: 'Running Task List',
+  SOME_PASSED: 'SOME PASSED',
+  ALL_PASSED: 'ALL PASSED',
+  ALL_FAILED: 'ALL FAILED',
+  PROGRAM_TIMEOUT: 'PROGRAM TIMEOUT'
 }

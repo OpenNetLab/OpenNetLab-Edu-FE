@@ -65,7 +65,7 @@ const getters = {
     } else if (getters.contestStatus === CONTEST_STATUS.NOT_START) {
       return !getters.isContestAdmin
     }
-    console.log('status' + rootGetters.isAuthenticated)
+    // console.log('status' + rootGetters.isAuthenticated)
     return !rootGetters.isAuthenticated
   },
   passwordFormVisible: (state, getters) => {

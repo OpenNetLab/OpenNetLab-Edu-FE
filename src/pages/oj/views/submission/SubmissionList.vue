@@ -137,14 +137,7 @@
             title: this.$i18n.t('m.Score'),
             align: 'center',
             render: (h, params) => {
-              return h('span', params.row.info['score'])
-            }
-          },
-          {
-            title: this.$i18n.t('m.RunServer'),
-            align: 'center',
-            render: (h, params) => {
-              return h('span', params.row.server_list[0])
+              return h('span', params.row.grade)
             }
           },
           {
@@ -242,7 +235,8 @@
           this.adjustRejudgeColumn()
           this.loadingTable = false
           this.submissions = data.results
-          console.log('LOOK!')
+
+          console.log('LOOK')
           console.log(this.submissions)
           this.total = data.total
         }).catch(() => {

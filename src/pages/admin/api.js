@@ -214,11 +214,13 @@ export default {
     })
   },
   createProblem (data) {
-    console.log(data)
     return ajax('admin/problem', 'post', {
       data
     })
   },
+  // createProblem (data) {
+  //   return axios.post('admin/problem', data)
+  // },
   editProblem (data) {
     return ajax('admin/problem', 'put', {
       data

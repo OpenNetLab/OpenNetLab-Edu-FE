@@ -219,7 +219,8 @@
         <el-row>
           <el-col :span="6">
             <el-form-item :label="$t('m.DockerFileUPDATE')" required>
-              <el-upload action :limit="1" :auto-upload="false" :show-file-list="true" :on-change="handleImageChange">
+              <el-upload action accept=".zip" :before-upload="beforeUpload" :limit="1" :auto-upload="false" 
+              :show-file-list="true" :on-change="handleZipChange">
                 <el-button size="small" type="primary" icon="el-icon-fa-upload" slot="trigger">Choose File</el-button>
               </el-upload>
 
@@ -329,7 +330,8 @@
           hint: '',
           source: '',
           hash: '',
-          chunkList: []
+          chunkList: [],
+          fileHash: ''
         },
         allLanguage: {},
         inputVisible: false,
@@ -348,7 +350,9 @@
         percent: 0,
         videoUrl: '',
         upload: true,
-        percentCount: 0
+        percentCount: 0,
+        fileObject: null,
+        fileHash: ''
         // chunkList: [],
         // hash: ''
       }
@@ -389,8 +393,9 @@
           template: {},
           hint: '',
           source: '',
-          imagehash: '',
-          cmdhash: ''
+          hash: '',
+          chunkList: [],
+          fileHash: ''
         }
         let contestID = this.$route.params.contestId
         if (contestID) {
@@ -409,6 +414,7 @@
           let funcName = {'edit-problem': 'getProblem', 'edit-contest-problem': 'getContestProblem'}[this.routeName]
           api[funcName](this.$route.params.problemId).then(problemRes => {
             let data = problemRes.data.data
+            console.log(data)
             let ranges = []
             let confs = []
             let codes = []
@@ -418,8 +424,8 @@
             if (ranges.length === 0) {
               ranges.push({value: 0})
             }
-            for (var key in data.lab_config) {
-              confs.push({key: key, value: data.lab_config[key]})
+            for (var key in data.lab_conf) {
+              confs.push({key: key, value: data.lab_conf[key]})
             }
             if (confs.length === 0) {
               confs.push({key: '', value: ''})
@@ -480,6 +486,33 @@
       }
     },
     methods: {
+      beforeUpload (file) {
+        const fileSuffix = file.name.substring(file.name.lastIndexOf('.') + 1)
+        const whiteList = ['.zip']
+        if (whiteList.indexOf(fileSuffix) === -1) {
+          this.$message.error('上传文件只能是zip格式')
+          return false
+        }
+        // 最大文件大小20M
+        let MAX_FILE_SIZE = 10
+        const isLimit20M = file.size / 1024 / 1024 < MAX_FILE_SIZE
+        if (!isLimit20M) {
+          this.$message.error('文件大小限制为小于' + MAX_FILE_SIZE + 'MB')
+          return false
+        }
+      },
+      handleZipChange (file) {
+        if (!file) return
+        const fileObj = file.raw
+        let buffer = this.fileToBuffer(fileObj)
+        const suffix = /\.([0-9A-z]+)$/.exec(fileObj.name)[1]// 文件后缀名
+        // 根据文件内容生成 hash 值
+        const spark = new SparkMD5.ArrayBuffer()
+        spark.append(buffer)
+        const hash = spark.end()
+        this.fileHash = `${hash}.${suffix}`
+        this.fileObject = fileObj
+      },
       async handleImageChange (file) {
         if (!file) return
         this.percent = 0
@@ -759,6 +792,20 @@
           this.$error(this.error.tags)
           return
         }
+        const FormData = require('form-data')
+        const formData = new FormData()
+        formData.append('_id', this.problem._id)
+        formData.append('title', this.problem.title)
+        formData.append('description', this.problem.description)
+        formData.append('code_num', this.problem.code_num)
+        formData.append('is_public', this.problem.is_public)
+        formData.append('vm_num', this.problem.vm_num)
+        formData.append('total_score', this.problem.total_score)
+        formData.append('visible', this.problem.visible)
+        formData.append('share_submission', this.problem.share_submission)
+        for (let k in this.problem.tags) {
+          formData.append('tags', this.problem.tags[k])
+        }
         // setting languages as python only
         this.problem.languages = ['python']
         // if (!this.problem.languages.length) {
@@ -773,10 +820,14 @@
         //   return
         // }
         this.problem.languages = this.problem.languages.sort()
+        for (let k in this.problem.languages) {
+          formData.append('languages', this.problem.languages[k])
+        }
         this.problem.template = {}
         for (let k in this.template) {
           if (this.template[k].checked) {
             this.problem.template[k] = this.template[k].code
+            formData.append('template', this.template[k].code)
           }
         }
         let configs = {}
@@ -794,16 +845,34 @@
           cds.push(v.value)
         }
         this.problem.code_names = cds
+        for (let k in this.problem.code_names) {
+          formData.append('code_names', this.problem.code_names[k])
+        }
         this.problem.port_num = ports
+        for (let k in ports) {
+          formData.append('port_num', this.problem.port_num[k])
+        }
         this.problem.lab_config = configs
+        // for (let k in this.problem.lab_config) {
+        //   formData.append('lab_config', this.problem.lab_config[k])
+        // }
         if (this.problem.log_judge_code === '') {
           this.problem.log_judge = false
         } else {
           this.problem.log_judge = true
         }
         // 对文件计算的hash值放到problem信息中
-        this.problem.imagehash = this.ImageHash
-        this.problem.cmdhash = this.CmdHash
+        // this.problem.imagehash = this.ImageHash
+        // this.problem.cmdhash = this.CmdHash
+        // 添加文件相关
+        this.problem.fileHash = this.fileHash
+        formData.append('fileHash', this.problem.fileHash)
+        formData.append('file', this.fileObject)
+        // const FormData = require('form-data')
+        // const formData = new FormData()
+        // formData.append('file', this.fileObject)
+        // this.problem.file = this.fileObject
+        // 选择api
         let funcName = {
           'create-problem': 'createProblem',
           'edit-problem': 'editProblem',
@@ -813,14 +882,17 @@
         // edit contest problem 时, contest_id会被后来的请求覆盖掉
         if (funcName === 'editContestProblem') {
           this.problem.contest_id = this.contest.id
+          formData.append('contest_id', this.problem.contest_id)
         }
-        let cmdfile = 'cmd'
-        let imagefile = 'image'
-        console.log(this.problem)
-        api[funcName](this.problem).then(res => {
+        // let cmdfile = 'cmd'
+        // let imagefile = 'image'
+        // this.problem.chunkList = this.imageChunkList
+        // console.log(this.problem)
+        // console.log(formData.getAll('code_names'))
+        api[funcName](formData).then(res => {
           console.log(res.data.data['id'])
-          this.sendRequest(res.data.data['id'], cmdfile)
-          this.sendRequest(res.data.data['id'], imagefile)
+          // this.sendRequest(res.data.data['id'], cmdfile)
+          // this.sendRequest(res.data.data['id'], imagefile)
           if (this.routeName === 'create-contest-problem' || this.routeName === 'edit-contest-problem') {
             // 跳转，如果是创建或者编辑contest的problem，跳转的参数是这个这个contestId，形式是: /contest/:contestId/problems
             this.$router.push({name: 'contest-problem-list', params: {contestId: this.$route.params.contestId}})
