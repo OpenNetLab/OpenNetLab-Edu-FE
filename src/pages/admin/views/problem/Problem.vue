@@ -172,50 +172,25 @@
           </el-form-item>
           </el-col>
         </el-row>
-        <!--上传文件的功能，待完
-        <el-row>
-          <el-col :span="6">
-          <el-form-item :label="$t('m.DockerFileUPDATE')" required>
-            <el-upload
-              ref="FPS"
-              action="/api/admin/import_fps"
-              name="file"
-              :file-list="fileList2"
-              :show-file-list="true"
-              :with-credentials="true"
-              :limit="3"
-              :on-change="onFile2Change"
-              :auto-upload="false"
-              :on-success="uploadSucceeded"
-              :on-error="uploadFailed">
-              <el-button size="small" type="primary" icon="el-icon-fa-upload" slot="trigger">Choose File</el-button>
-              <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload('FPS')">Upload</el-button>
-            </el-upload>
-            </el-form-item>
-          </el-col>
 
-          <el-col :span="10">
-          <el-form-item :label="$t('m.ExcutionBashUpload')" required>
-            <el-upload
-              ref="FPS"
-              action="/api/admin/import_fps"
-              name="file"
-              :file-list="fileList2"
-              :show-file-list="true"
-              :with-credentials="true"
-              :limit="3"
-              :on-change="onFile2Change"
-              :auto-upload="false"
-              :on-success="uploadSucceeded"
-              :on-error="uploadFailed">
-              <el-button size="small" type="primary" icon="el-icon-fa-upload" slot="trigger">Choose File</el-button>
-              <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload('FPS')">Upload</el-button>
-            </el-upload>
-            </el-form-item>
+        <el-row>
+          <el-col :span="20"> 
+          <el-form-item :label="$t('m.Testing_timeout_lab')" required>
+              <el-row :gutter="8" style="margin-bottom: 15px">
+                <el-col :span="4" >
+                <el-tag type="success">
+                  <el-form-item :label="$t('m.Testing_timeout_setting')"></el-form-item>
+                </el-tag>
+              </el-col>
+              <el-col :span="4">
+                <el-input v-model.number="problem.timeout" type="number" :placeholder="$t('m.description')"></el-input>
+              </el-col>
+              </el-row>
+          </el-form-item>
           </el-col>
         </el-row>
-        -->
-        <!--上传文件，开发中-->
+
+        <!-- upload lab zip -->
         <el-row>
           <el-col :span="6">
             <el-form-item :label="$t('m.DockerFileUPDATE')" required>
@@ -314,6 +289,7 @@
           code_names: [{
             value: ''
           }],
+          timeout: 5,
           code_num: 1,
           total_score: 100,
           _id: '',
@@ -792,6 +768,11 @@
           this.$error(this.error.tags)
           return
         }
+        if (this.problem.timeout <= 0) {
+          this.error.timeout = 'Timeout cannot be negative value'
+          this.$error(this.error.timeout)
+          return
+        }
         const FormData = require('form-data')
         const formData = new FormData()
         formData.append('_id', this.problem._id)
@@ -803,6 +784,7 @@
         formData.append('total_score', this.problem.total_score)
         formData.append('visible', this.problem.visible)
         formData.append('share_submission', this.problem.share_submission)
+        formData.append('timeout', this.problem.timeout)
         for (let k in this.problem.tags) {
           formData.append('tags', this.problem.tags[k])
         }

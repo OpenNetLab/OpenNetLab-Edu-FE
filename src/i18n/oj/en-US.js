@@ -265,6 +265,8 @@ export const m = {
   Servers: 'Server node configuration',
   Lab_config: 'Lab configurations',
   Code_segment: 'Code segment configuration',
+  Testing_timeout_lab: 'Testing timeout configuration',
+  Testing_timeout_setting: 'Testing timeout (in seconds)',
   DockerFileUPDATE: 'Lab Zip Upload',
   ExcutionBashUpload: 'Excution shell upload',
   Log_judge: 'Special judge code',
