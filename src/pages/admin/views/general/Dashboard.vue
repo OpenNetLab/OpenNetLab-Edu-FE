@@ -59,15 +59,14 @@
         <info-card color="#409EFF" icon="el-icon-fa-trophy" message="Recent Contests" class="info-item"
                    :value="infoData.recent_contest_count"></info-card>
       </div>
-      <panel style="margin-top: 5px">
-        <span slot="title" v-loading="loadingReleases">User Guide
-        <el-popover placement="right" trigger="hover">
+      <panel style="margin-top: 5px; height: 16em">
+        <!-- <span slot="title" v-loading="loadingReleases">User Guide -->
+        <span slot="title">User Guide
           <i slot="reference" class="el-icon-fa-question-circle import-user-icon"></i>
           <p>Check our GitHub project to get more new information: </p>
           <p>Reference: <a href="https://github.com/OpenNetLab" target="_blank">
           https://github.com/OpenNetLab</a>
           </p>
-        </el-popover>
         </span>
       </panel>
     </el-col>
