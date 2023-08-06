@@ -2,7 +2,10 @@
   <div id="header">
     <Menu theme="light" mode="horizontal" @on-select="handleRoute" :active-name="activeMenu" class="oj-menu">
 
-      <div class="logo"><span>OpenNetLab</span></div>
+      <div class="logo">
+        <img src="../../../assets/ONLicon.png" alt="oj admin" width="25px" margin-top="100px"/>
+        <span>OpenNetLab</span>
+      </div>
 
       <Menu-item name="/">
         <Icon type="home"></Icon>
@@ -16,22 +19,24 @@
         <Icon type="trophy"></Icon>
         {{$t('m.Contests')}}
       </Menu-item>
-      <Menu-item name="/status">
-        <Icon type="ios-pulse-strong"></Icon>
-        {{$t('m.NavStatus')}}
-      </Menu-item>
-      <Submenu name="Network Info">
-        <template slot="title">
-          <Icon type="podium"></Icon>
-          {{$t('m.Net_info')}}
-        </template>
-        <Menu-item name="/judge-server-nodes">
-          {{$t('m.NodeInUse')}}
-        </Menu-item>
-        <Menu-item name="/running-status">
-          {{$t('m.TaskInRunning')}}
-        </Menu-item>
-      </Submenu>
+
+      <!-- <Menu-item name="/status"> -->
+      <!--   <Icon type="ios-pulse-strong"></Icon> -->
+      <!--   {{$t('m.NavStatus')}} -->
+      <!-- </Menu-item> -->
+
+      <!-- <Submenu name="Network Info"> -->
+      <!--   <template slot="title"> -->
+      <!--     <Icon type="podium"></Icon> -->
+      <!--     {{$t('m.Net_info')}} -->
+      <!--   </template> -->
+      <!--   <Menu-item name="/judge-server-nodes"> -->
+      <!--     {{$t('m.NodeInUse')}} -->
+      <!--   </Menu-item> -->
+      <!--   <Menu-item name="/running-status"> -->
+      <!--     {{$t('m.TaskInRunning')}} -->
+      <!--   </Menu-item> -->
+      <!-- </Submenu> -->
       <Submenu name="about">
         <template slot="title">
           <Icon type="information-circled"></Icon>
@@ -40,9 +45,9 @@
         <Menu-item name="/about">
           {{$t('m.About_ONL')}}
         </Menu-item>
-        <Menu-item name="/FAQ">
-          {{$t('m.FAQ')}}
-        </Menu-item>
+        <!-- <Menu-item name="/FAQ"> -->
+        <!--   {{$t('m.FAQ')}} -->
+        <!-- </Menu-item> -->
       </Submenu>
 
 

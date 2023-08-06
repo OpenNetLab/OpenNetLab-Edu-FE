@@ -119,7 +119,8 @@
           <span class="card-title">{{$t('m.Information')}}</span>
         </div>
         <ul>
-          <li><p>ID</p>
+          <li>
+            <span>ID</span>
             <p>{{problem._id}}</p></li>
           <li>
             <p>{{$t('m.Created')}}</p>
@@ -174,10 +175,10 @@
   import CodeMirror from '@oj/components/CodeMirror.vue'
   import storage from '@/utils/storage'
   import {FormMixin} from '@oj/components/mixins'
-  import {JUDGE_STATUS, CONTEST_STATUS, buildProblemCodeKey} from '@/utils/constants'
+  import {JUDGE_STATUS, CONTEST_STATUS, buildProblemCodeKey, LANGUAGE_TRANS} from '@/utils/constants'
   import api from '@oj/api'
   import {pie, largePie} from './chartData'
-
+  
   // 只显示这些状态的图形占用
   const filtedStatus = ['-1', '-2', '0', '1', '2', '3', '4', '8']
 
@@ -241,6 +242,8 @@
           vm.language = problemCode.language
           vm.code = problemCode.code
           vm.theme = problemCode.theme
+          console.log('vm')
+          console.log(vm.language)
         })
       } else {
         next()
@@ -274,7 +277,13 @@
             this.submissionExists = res.data.data
           })
           // fix this: problem's languages should be a list
-          problem.languages = problem.languages
+          // 把language的名字转换成正式名字
+          // let names = []
+          // problem.languages.forEach((v, i) => {
+          //   console.log('language ' + LANGUAGE_TRANS[v].name)
+          //   names.push(LANGUAGE_TRANS[v].name)
+          // })
+          // problem.languages = names
           this.problem = problem
           // if (problem.statistic_info) {
           //   this.changePie(problem)
@@ -388,7 +397,6 @@
         this.refreshStatus = setTimeout(checkStatus, 2000)
       },
       submitCode () {
-        console.log('submitCode is called')
         for (let code of this.code_value_list) {
           if (code.value.trim() === '') {
             this.$error(this.$i18n.t('m.Code_list_can_not_be_empty'))
@@ -412,7 +420,6 @@
         const submitFunc = (data, detailsVisible) => {
           this.statusVisible = true
           api.submitCode(data).then(res => {
-            console.log('调用submitCode的api')
             this.submissionId = res.data.data.id
             // 定时检查状态
             this.submitting = false

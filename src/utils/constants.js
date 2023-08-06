@@ -1,3 +1,11 @@
+export const LANGUAGE_TRANS = {
+  'python': {
+    name: 'Python3',
+    description: 'Python 3.6',
+    content_type: 'text/x-python'
+  }
+}
+
 export const JUDGE_STATUS = {
   '0': {
     name: 'Pending',

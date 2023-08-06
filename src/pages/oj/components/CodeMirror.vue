@@ -113,11 +113,15 @@
     },
     mounted () {
       utils.getLanguages().then(languages => {
+        console.log('look')
+        console.log(languages)
         let mode = {}
         languages.forEach(lang => {
           mode[lang.name] = lang.content_type
         })
         this.mode = mode
+        console.log(this.mode)
+        console.log(this.language)
         this.editor.setOption('mode', this.mode[this.language])
       })
       this.editor.focus()

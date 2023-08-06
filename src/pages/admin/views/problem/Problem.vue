@@ -140,7 +140,7 @@
         </el-row> -->
         
         <el-row>
-          <el-col :span="20"> 
+          <el-col :span="24"> 
           <el-form-item :label="$t('m.Code_segment')" required>
               <el-row :gutter="8" style="margin-bottom: 15px">
                 <el-col :span="4" >
@@ -160,10 +160,10 @@
                   <el-form-item :label="$t('Code segment ' + (index + 1) + ' filename: ')"></el-form-item>
                   </el-tag>
               </el-col>
-              <el-col :span="9">
-                <el-input v-model="range.value" :placeholder="$t('m.description') + ' ' + (index + 1)" ></el-input>
+              <el-col :span="6">
+                <el-input v-model="range.value" :placeholder="$t('m.description')" ></el-input>
               </el-col>
-              <el-col :span="8">
+              <el-col :span="4">
                   <el-button plain icon="el-icon-fa-plus" @click="addCodeD"></el-button>
                   <el-button plain icon="el-icon-fa-trash" @click="removeCodeD(range)"></el-button>
               </el-col>
@@ -174,7 +174,7 @@
         </el-row>
 
         <el-row>
-          <el-col :span="20"> 
+          <el-col :span="24"> 
           <el-form-item :label="$t('m.Testing_timeout_lab')" required>
               <el-row :gutter="8" style="margin-bottom: 15px">
                 <el-col :span="4" >
@@ -182,8 +182,8 @@
                   <el-form-item :label="$t('m.Testing_timeout_setting')"></el-form-item>
                 </el-tag>
               </el-col>
-              <el-col :span="4">
-                <el-input v-model.number="problem.timeout" type="number" :placeholder="$t('m.description')"></el-input>
+              <el-col :span="6">
+                <el-input v-model.number="problem.timeout" type="number" :placeholder="$t('m.Time_Out')"></el-input>
               </el-col>
               </el-row>
           </el-form-item>

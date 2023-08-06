@@ -1,6 +1,6 @@
 <template>
   <div class="view">
-    <Panel title="LAB List">
+    <Panel title="Course List">
       <div slot="header">
         <el-input
           v-model="keyword"
@@ -61,9 +61,9 @@
           width="250"
           label="Operation">
           <div slot-scope="scope">
-            <icon-btn name="Edit" icon="edit" @click.native="goEdit(scope.row.id)"></icon-btn>
-            <icon-btn name="Problem" icon="list-ol" @click.native="goContestProblemList(scope.row.id)"></icon-btn>
-            <icon-btn name="Announcement" icon="info-circle"
+            <icon-btn name="Edit Course" icon="edit" @click.native="goEdit(scope.row.id)"></icon-btn>
+            <icon-btn name="Add Lab" icon="list-ol" @click.native="goContestProblemList(scope.row.id)"></icon-btn>
+            <icon-btn name="Add Announcement" icon="info-circle"
                       @click.native="goContestAnnouncement(scope.row.id)"></icon-btn>
             <icon-btn icon="download" name="Download Accepted Submissions"
                       @click.native="openDownloadOptions(scope.row.id)"></icon-btn>

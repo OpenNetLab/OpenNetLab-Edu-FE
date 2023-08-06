@@ -27,9 +27,15 @@
                 <span slot="close">{{$t('m.All')}}</span>
               </i-switch>
             </li>
+
+            <!--搜索框-->
             <li>
-              <!--搜索框-->
               <Input v-model="formFilter.username" :placeholder="$t('m.Search_Author')" @on-enter="handleQueryChange"/>
+            </li>
+
+            <!--搜索框-->
+            <li>
+              <Input v-model="formFilter.problem_name" :placeholder="$t('m.Search_Problem')" @on-enter="handleQueryChange"/>
             </li>
 
             <li>
@@ -64,7 +70,8 @@
         formFilter: {
           myself: false,
           result: '',
-          username: ''
+          username: '',
+          problem_name: ''
         },
         columns: [
           {
@@ -199,6 +206,7 @@
         this.formFilter.myself = query.myself === '1'
         this.formFilter.result = query.result || ''
         this.formFilter.username = query.username || ''
+        this.formFilter.problem_name = query.problem_name || ''
         this.page = parseInt(query.page) || 1
         if (this.page < 1) {
           this.page = 1
@@ -212,6 +220,7 @@
           myself: this.formFilter.myself === true ? '1' : '0',
           result: this.formFilter.result,
           username: this.formFilter.username,
+          problem_name: this.formFilter.problem_name,
           page: this.page
         }
       },
@@ -225,6 +234,8 @@
         let offset = (this.page - 1) * this.limit
         let func = this.contestID ? 'getContestSubmissionList' : 'getSubmissionList'
         this.loadingTable = true
+        console.log('params')
+        console.log(params)
         // get information
         api[func](offset, this.limit, params).then(res => {
           let data = res.data.data

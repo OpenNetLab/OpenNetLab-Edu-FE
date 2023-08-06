@@ -29,8 +29,7 @@
           {
             title: '#',
             key: '_id',
-            sortType: 'asc',
-            width: 150
+            sortType: 'asc'
           },
           {
             title: this.$i18n.t('m.Title'),
@@ -50,8 +49,7 @@
         OITableColumns: [
           {
             title: '#',
-            key: '_id',
-            width: 150
+            key: '_id'
           },
           {
             title: this.$i18n.t('m.Title'),

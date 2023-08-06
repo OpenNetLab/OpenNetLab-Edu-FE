@@ -83,7 +83,7 @@
       <div class="panel-options">
         <el-button v-if="contestId" type="primary"
                    size="small" icon="el-icon-plus"
-                   @click="addProblemDialogVisible = true">Add From Public Topic
+                   @click="addProblemDialogVisible = true">Add From Public Labs
         </el-button>
         <el-pagination
           class="page"

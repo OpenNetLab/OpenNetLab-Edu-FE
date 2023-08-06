@@ -35,6 +35,7 @@
                 {{contest.title}}
               </a>
               <template v-if="contest.contest_type != 'Public'">
+                <p>{{ contest.contest_type }}</p>
                 <Icon type="ios-locked-outline" size="20"></Icon>
               </template>
             </p>
@@ -103,6 +104,7 @@
         next((vm) => {
           vm.contests = res.data.data.results
           vm.total = res.data.data.total
+          console.log(vm.contests)
         })
       }, (res) => {
         next()
@@ -110,12 +112,14 @@
     },
     methods: {
       init () {
+        console.log('init')
         let route = this.$route.query
         this.query.status = route.status || ''
         this.query.keyword = route.keyword || ''
         this.page = parseInt(route.page) || 1
         this.limit = parseInt(route.limit) || 10
         this.getContestList(this.page)
+        console.log(this.contests)
       },
       getContestList (page = 1) {
         let offset = (page - 1) * this.limit
@@ -159,6 +163,7 @@
     watch: {
       '$route' (newVal, oldVal) {
         if (newVal !== oldVal) {
+          console.log('router')
           this.init()
         }
       }

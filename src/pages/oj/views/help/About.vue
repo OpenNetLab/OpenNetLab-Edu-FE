@@ -3,23 +3,7 @@
     <panel :padding="15" class="container">
       <div slot="title">{{$t('m.Result_Explanation')}}</div>
       <div class="content">
-        <ul>
-          <li><b>{{$t('m.Pending')}} & {{$t('m.Judging')}}</b> : {{$t('m.Pending_Judging_Description')}}</li>
-          <li><b>{{$t('m.Compile_Error')}}</b> :	{{$t('m.Compile_Error_Description')}}
-      </li>
-          <li><b>{{$t('m.Accepted')}}</b> :	{{$t('m.Accepted_Description')}}</li>
-          <li><b>{{$t('m.Wrong_Answer')}}</b> :	{{$t('m.Wrong_Answer_Description')}}</li>
-          <li>
-            <b>{{$t('m.Runtime_Error')}}</b>
-            :	{{$t('m.Runtime_Error_Description')}}
-          </li>
-          <li><b>{{$t('m.Time_Limit_Exceeded')}}</b>
-            :	{{$t('m.Time_Limit_Exceeded_Description')}}
-          </li>
-          <li><b>{{$t('m.Memory_Limit_Exceeded')}}</b> :	{{$t('m.Memory_Limit_Exceeded_Description')}}</li>
-          <li><b>{{$t('m.System_Error')}}</b> :	{{$t('m.System_Error_Description')}}
-          </li>
-        </ul>
+        <p>OpenNetLab is designed by USTC for network education.</p>
       </div>
     </panel>
 

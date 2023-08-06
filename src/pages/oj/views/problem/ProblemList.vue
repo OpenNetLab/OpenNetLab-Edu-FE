@@ -26,7 +26,7 @@
           </li>
         </ul>
       </div>
-      <Table style="width: 100%; font-size: 16px;"
+      <Table style="width: 100%; font-size: 20px;"
              :columns="problemTableColumns"
              :data="problemList"
              :loading="loadings.table"
@@ -79,7 +79,7 @@
           {
             title: this.$i18n.t('m.ID'),
             key: '_id',
-            width: 80,
+            width: 250,
             render: (h, params) => {
               return h('Button', {
                 props: {
@@ -99,7 +99,7 @@
           },
           {
             title: this.$i18n.t('m.Title'),
-            width: 400,
+            width: 250,
             render: (h, params) => {
               return h('Button', {
                 props: {
@@ -120,12 +120,12 @@
               }, params.row.title)
             }
           },
-          {
-            title: this.$i18n.t('m.VM_num'),
-            render: (h, params) => {
-              return h('span', params.row.vm_num)
-            }
-          },
+          // {
+          //   title: this.$i18n.t('m.VM_num'),
+          //   render: (h, params) => {
+          //     return h('span', params.row.vm_num)
+          //   }
+          // },
           {
             title: this.$i18n.t('m.Creator'),
             render: (h, params) => {

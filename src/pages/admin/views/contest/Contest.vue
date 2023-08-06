@@ -86,7 +86,7 @@
     },
     data () {
       return {
-        title: 'Creat Your Lab',
+        title: 'Create Your Course',
         disableRuleType: false,
         contest: {
           title: '',

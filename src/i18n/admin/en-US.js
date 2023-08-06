@@ -28,7 +28,7 @@ export const m = {
   User_Email: 'Email',
   User_New_Password: 'New Password',
   User_Type: 'User Type',
-  Problem_Permission: 'Topic Permission',
+  Problem_Permission: 'Lab Permission',
   Two_Factor_Auth: 'Two Factor Auth',
   Is_Disabled: 'Is Disabled',
   // Announcement.vue
@@ -89,8 +89,8 @@ export const m = {
   Score: 'Score',
   Hint: 'Hint',
   Source: 'Source',
-  Edit_Problem: 'Edit Topic',
-  Add_Problme: 'Add Topic',
+  Edit_Problem: 'Edit My Lab',
+  Add_Problme: 'Add A Lab',
   High: 'High',
   Mid: 'Mid',
   Low: 'Low',
@@ -99,7 +99,7 @@ export const m = {
   Tutor: 'Tutor',
   Tutors: 'Tutor User',
    // ProblemList.vue
-  Contest_Problem_List: 'Lab Topic List',
+  Contest_Problem_List: 'Course Lab List',
   // Contest.vue
   ContestTitle: 'Title',
   ContestDescription: 'Description',
@@ -125,10 +125,11 @@ export const m = {
   password: 'password',
   Portshint: 'Excution Node',
   Ports: 'Number of ports',
-  Add_Problem: 'Add a Topic',
+  Add_Problem: 'Add A Lab',
   param: 'parameter',
   value: 'value',
-  description: 'requirement for code segment',
+  description: 'Enter a name for this code segment, e.g. sender.py',
   Restriction: 'Submission restriction (1-999)',
-  RestrictionNote: 'maximum number of submissions'
+  RestrictionNote: 'maximum number of submissions',
+  Time_Out: 'Enter a integer as the timeout parameter'
 }
