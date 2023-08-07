@@ -21,7 +21,7 @@
           </div>
           <div class="middle">
             <p>{{$t('m.UserHomeserSubmissions')}}</p>
-            <p class="emphasis">{{profile.submission_number}}</p>
+            <p class="emphasis">{{profile.total_submissions}}</p>
           </div>
           <div class="right">
             <p>{{$t('m.UserHomeScore')}}</p>
@@ -30,18 +30,20 @@
         </div>
         <div id="problems">
           <div v-if="problems.length">{{$t('m.List_Solved_Problems')}}
-            <Poptip v-if="refreshVisible" trigger="hover" placement="right-start">
-              <Icon type="ios-help-outline"></Icon>
-              <div slot="content">
-                <p>If you find the following problem id does not exist,<br> try to click the button.</p>
-                <Button type="info" @click="freshProblemDisplayID">regenerate</Button>
-              </div>
-            </Poptip>
+            <!-- <Poptip v-if="refreshVisible" trigger="hover" placement="right-start"> -->
+            <!--   <Icon type="ios-help-outline"></Icon> -->
+            <!--   <div slot="content"> -->
+            <!--     <p>If you find the following problem id does not exist,<br> try to click the button.</p> -->
+            <!--     <Button type="info" @click="freshProblemDisplayID">regenerate</Button> -->
+            <!--   </div> -->
+            <!-- </Poptip> -->
           </div>
           <p v-else>{{$t('m.UserHomeIntro')}}</p>
           <div class="btns">
             <div class="problem-btn" v-for="problemID of problems" :key="problemID">
-              <Button type="ghost" @click="goProblem(problemID)">{{problemID}}</Button>
+              <Button type="ghost">{{problemID}}</Button>
+              <!-- problem now only resides in labs, don't go to problem page -->
+              <!-- <Button type="ghost" @click="goProblem(problemID)">{{problemID}}</Button> -->
             </div>
           </div>
         </div>
@@ -85,23 +87,14 @@
           this.profile = res.data.data
           this.getSolvedProblems()
           let registerTime = time.utcToLocal(this.profile.user.create_time, 'YYYY-MM-D')
-          console.log('The guy registered at ' + registerTime + '.')
         })
       },
       getSolvedProblems () {
-        let ACMProblems = this.profile.acm_problems_status.problems || {}
-        let OIProblems = this.profile.oi_problems_status.problems || {}
-        // todo oi problems
-        let ACProblems = []
-        for (let problems of [ACMProblems, OIProblems]) {
-          Object.keys(problems).forEach(problemID => {
-            if (problems[problemID]['status'] === 0) {
-              ACProblems.push(problems[problemID]['_id'])
-            }
-          })
+        for (let key in this.profile.problems_status) {
+          if (this.profile.problems_status[key] === 100) {
+            this.problems.push(key)
+          }
         }
-        ACProblems.sort()
-        this.problems = ACProblems
       },
       goProblem (problemID) {
         this.$router.push({name: 'problem-details', params: {problemID: problemID}})

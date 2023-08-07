@@ -258,7 +258,7 @@ export const m = {
   UserHomeserSubmissions: 'Submissions',
   UserHomeScore: 'Score',
   List_Solved_Problems: 'List of solved labs',
-  UserHomeIntro: 'The guy is so lazy that has not solved any Topic yet.',
+  UserHomeIntro: 'You haven\'t solved any lab yet',
   VM_num: 'Nodes num',
   Tutors: 'Tutors',
   RunServer: 'Running server',
