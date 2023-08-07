@@ -70,5 +70,4 @@ test.vue
 vendor-manifest.json
 vendor.dll*.js
 
-build
 node_modules
