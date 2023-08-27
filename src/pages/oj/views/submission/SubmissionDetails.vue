@@ -139,7 +139,6 @@
     },
     methods: {
       handleChange (val) {
-        console.log(val)
       },
       // computedItemHeight () {
       //   return window.innerHeight - Array.from(document.querySelectorAll('.el-collapse-item'))
@@ -153,13 +152,11 @@
         api.getSubmission(this.$route.params.id).then(res => {
           this.loading = false
           let data = res.data.data
-          console.log('Get Submit Detail:')
-          console.log(data)
           this.submission.result = data.result
           this.submission.language = data.language
           this.submission.username = data.username
           this.submission.code_list = data.code_list
-          if (data.result === 0) {
+          if (data.result === 0 || data.result === 1) {
             // PENDING
             this.submission_score = ' '
             this.display_message = 'The server is testing your program, wait a while'
@@ -195,7 +192,6 @@
             }
             this.display_message += temp
           }
-          console.log(this.display_message)
         }, () => {
           this.loading = false
         })

@@ -188,7 +188,6 @@
       }
     },
     mounted () {
-      console.log('mounted')
       this.init()
       this.JUDGE_STATUS = Object.assign({}, JUDGE_STATUS)
       // 去除submitting的状态 和 两个
@@ -197,7 +196,6 @@
     },
     methods: {
       init () {
-        console.log('init')
         this.status_or_contest = this.$route.name
         this.contestID = this.$route.params.contestID   // contest/:contestID
         // 当ALL -> Mine发生改变时，query就有了
@@ -215,7 +213,6 @@
         this.getSubmissions()
       },
       buildQuery () {
-        console.log('buildQuery')
         return {
           myself: this.formFilter.myself === true ? '1' : '0',
           result: this.formFilter.result,
@@ -225,17 +222,13 @@
         }
       },
       getSubmissions () {
-        console.log('getSubmission')
         let params = this.buildQuery()
         params.contest_id = this.contestID
         params.problem_id = this.problemID
         // params.name = this.status_or_contest
-        console.log(params)
         let offset = (this.page - 1) * this.limit
         let func = this.contestID ? 'getContestSubmissionList' : 'getSubmissionList'
         this.loadingTable = true
-        console.log('params')
-        console.log(params)
         // get information
         api[func](offset, this.limit, params).then(res => {
           let data = res.data.data
@@ -247,8 +240,6 @@
           this.loadingTable = false
           this.submissions = data.results
 
-          console.log('LOOK')
-          console.log(this.submissions)
           this.total = data.total
         }).catch(() => {
           this.loadingTable = false
@@ -256,7 +247,6 @@
       },
       // 改变route， 通过监听route变化请求数据，这样可以产生route history， 用户返回时就会保存之前的状态
       changeRoute () {
-        console.log('changeRoute')
         let query = utils.filterEmptyValue(this.buildQuery())
         query.contestID = this.contestID
         query.problemID = this.problemID
