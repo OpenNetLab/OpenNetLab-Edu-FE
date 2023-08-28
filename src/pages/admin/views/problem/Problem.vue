@@ -866,6 +866,21 @@
           this.problem.contest_id = this.contest.id
           formData.append('contest_id', this.problem.contest_id)
         }
+        if (funcName === 'editContestProblem' || funcName === 'editProblem') {
+          api[funcName](this.problem).then(res => {
+            console.log(res.data.data['id'])
+            // this.sendRequest(res.data.data['id'], cmdfile)
+            // this.sendRequest(res.data.data['id'], imagefile)
+            if (this.routeName === 'create-contest-problem' || this.routeName === 'edit-contest-problem') {
+              // 跳转，如果是创建或者编辑contest的problem，跳转的参数是这个这个contestId，形式是: /contest/:contestId/problems
+              this.$router.push({name: 'contest-problem-list', params: {contestId: this.$route.params.contestId}})
+            } else {
+              this.$router.push({name: 'problem-list'})
+            }
+          }).catch(() => {
+          })
+          return
+        }
         // let cmdfile = 'cmd'
         // let imagefile = 'image'
         // this.problem.chunkList = this.imageChunkList
